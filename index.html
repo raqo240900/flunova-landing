@@ -302,7 +302,7 @@ margin-top: 1px;
 /* video */
 .video-slot {
 aspect-ratio: 9/16;
-max-width: 260px;
+max-width: 320px;
 margin: 0 auto;
 border-radius: 20px;
 background: linear-gradient(160deg, #17172A 0%, #0A0A14 100%);
@@ -316,6 +316,11 @@ padding: 24px;
 .video-slot video { width: 100%; height: 100%; border-radius: 20px; object-fit: cover; display: none; }
 .video-slot.has-video .placeholder-text { display: none; }
 .video-slot.has-video video { display: block; }
+.video-slot.has-video { padding: 0; overflow: hidden; background: #0B141A; }
+.video-nota { text-align: center; font-size: 0.8rem; color: var(--muted); margin: 14px 0 0; }
+.transcripcion { max-width: 320px; margin: 14px auto 0; font-size: 0.85rem; color: rgba(245,244,251,0.7); }
+.transcripcion summary { cursor: pointer; color: var(--cyan); font-weight: 500; }
+.transcripcion p { margin: 8px 0 0; line-height: 1.5; }
 .play-ring {
 width: 52px; height: 52px;
 border-radius: 50%;
@@ -455,14 +460,24 @@ margin: 0;
 
 <section class="wrap">
 <p class="kicker">Míralo en acción</p>
-<h2>30 segundos, con un negocio real</h2>
-<div class="video-slot" id="videoSlot">
-<video id="demoVideo" playsinline controls poster=""></video>
-<div class="placeholder-text">
-<div class="play-ring">▶</div>
-<p>Video de demostración<br>próximamente</p>
+<h2>45 segundos, con una clínica de ejemplo</h2>
+<div class="video-slot has-video" id="videoSlot">
+<video id="demoVideo" src="demo_conversacion.mp4" poster="demo_conversacion_poster.jpg" width="720" height="1280" muted playsinline controls preload="metadata" aria-label="Video de ejemplo: un paciente agenda una cita con el asistente de una clínica ficticia" aria-describedby="demoTexto"></video>
 </div>
-</div>
+<p class="video-nota">Conversación de ejemplo con una clínica ficticia.</p>
+<details class="transcripcion" id="demoTexto">
+<summary>Leer la conversación del video</summary>
+<p><b>Paciente:</b> Hola, quisiera sacar cita para una limpieza dental.</p>
+<p><b>Asistente:</b> ¡Hola! Soy el asistente virtual de Clínica Sonrisa. Con gusto te ayudo con tu cita. Tengo mañana a las 10:00 a. m. o a las 4:30 p. m. con la Dra. Karla. ¿Cuál prefieres?</p>
+<p><b>Paciente:</b> A las 10 por favor.</p>
+<p><b>Asistente:</b> Perfecto. ¿A nombre de quién agendo la cita?</p>
+<p><b>Paciente:</b> Luis Soto.</p>
+<p><b>Asistente:</b> Listo, Luis. Reservé tu limpieza dental para mañana a las 10:00 a. m. con la Dra. Karla. Para confirmarla, la clínica pide una seña de S/ 20. Puedes pagar por Yape al 987 654 321 y enviarme aquí la constancia.</p>
+<p><b>Paciente:</b> Ya pagué. (Envía la constancia de pago.)</p>
+<p><b>Asistente:</b> Gracias, Luis. Recibí tu constancia y la clínica la está revisando. Te aviso apenas la confirmen.</p>
+<p><i>El dueño recibe el aviso en su WhatsApp y responde «aprobado».</i></p>
+<p><b>Asistente:</b> Pago confirmado. Tu cita queda confirmada para mañana a las 10:00 a. m. con la Dra. Karla. ¡Te esperamos, Luis!</p>
+</details>
 </section>
 
 <section class="wrap">
@@ -492,10 +507,18 @@ typing.style.animation = 'none'; typing.offsetHeight; typing.style.animation = '
 }
 setInterval(restart, LOOP_MS);
 
-// Si más adelante subes el archivo del video, cámbiale el "src" a la ruta real
-// (por ejemplo: "demo.mp4") y descomenta las 2 líneas de abajo.
-// document.getElementById('demoVideo').src = "demo.mp4";
-// document.getElementById('videoSlot').classList.add('has-video');
+// El video de demostración empieza solo, sin sonido, cuando llega a la pantalla, y se detiene al salir.
+// Si la persona pidió «reducir movimiento» en su dispositivo, no se reproduce solo.
+(function () {
+  const v = document.getElementById('demoVideo');
+  if (!v || !('IntersectionObserver' in window)) return;
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  new IntersectionObserver(function (entradas) {
+    entradas.forEach(function (e) {
+      if (e.isIntersecting && e.intersectionRatio > 0.6) { v.play().catch(function () {}); } else { v.pause(); }
+    });
+  }, { threshold: [0, 0.6, 1] }).observe(v);
+})();
 </script>
 
 </body>
