@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#F6F9FC">
 <title>Flunova — Ventas y atención automatizada en WhatsApp</title>
 <link rel="icon" type="image/png" href="logo.png">
 <meta name="description" content="Un asistente con inteligencia artificial que responde tu WhatsApp, arma pedidos y agenda citas — sin que tengas que estar pendiente del celular todo el día.">
@@ -10,19 +11,28 @@
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap');
 
 :root {
---ink: #050507;
---paper: #F5F4FB;
---cyan: #0BC2FB;
---blue: #2D5BF6;
---purple: #9134F6;
---magenta: #F131FF;
---accent-solid: #9B3DF5;
---accent-deep: #2E1E7A;
+/* Paleta «claro clínico» */
+--bg: #F6F9FC;
+--titulo: #0B1F3A;
+--texto: #475569;
+--suave: #5B6B80;
+--azul: #2D5BF6;
+--azul-hover: #2449D1;
+--azul-tinte: #E3EBFD;
+--azul-tinte-texto: #1D3FBF;
+--tarjeta: #FFFFFF;
+--borde: #D8E2EE;
+--line: rgba(11, 31, 58, 0.10);
+--cian: #38C6F4;
+--noche: #0B1F3A;
+--noche-2: #12306B;
+--grad-texto: linear-gradient(115deg, #2D5BF6 0%, #6B3AF0 55%, #A52DD9 100%);
+/* El teléfono del ejemplo sigue siendo oscuro: es lo que resalta sobre el fondo claro */
+--tel-papel: #F5F4FB;
+--tel-cian: #0BC2FB;
+--grad-tel: linear-gradient(115deg, #0BC2FB 0%, #2D5BF6 38%, #9134F6 70%, #F131FF 100%);
 --bubble-out: #3548D4;
---muted: #B9B6C9;
---line: rgba(245, 244, 251, 0.12);
 --radius: 18px;
---grad: linear-gradient(115deg, var(--cyan) 0%, var(--blue) 38%, var(--purple) 70%, var(--magenta) 100%);
 }
 
 * { box-sizing: border-box; }
@@ -30,8 +40,8 @@ html { scroll-behavior: smooth; }
 
 body {
 margin: 0;
-background: var(--ink);
-color: var(--paper);
+background: var(--bg);
+color: var(--titulo);
 font-family: 'Work Sans', sans-serif;
 -webkit-font-smoothing: antialiased;
 overflow-x: hidden;
@@ -64,7 +74,7 @@ letter-spacing: -0.01em;
 }
 .brand img { width: 44px; height: 44px; display: block; border-radius: 9px; }
 .brand-gradient {
-background: var(--grad);
+background: var(--grad-texto);
 -webkit-background-clip: text;
 background-clip: text;
 color: transparent;
@@ -74,26 +84,31 @@ font-family: 'IBM Plex Mono', monospace;
 font-size: 0.68rem;
 letter-spacing: 0.08em;
 text-transform: uppercase;
-color: var(--muted);
-background: rgba(245,244,251,0.06);
-border: 1px solid var(--line);
+color: var(--suave);
+background: #EAF0F8;
+border: 1px solid var(--borde);
 padding: 5px 10px;
 border-radius: 100px;
+}
+
+/* ---------- ETIQUETAS (sobre cada título): formato píldora ---------- */
+.eyebrow, .kicker {
+display: inline-block;
+max-width: 100%;
+font-family: 'Work Sans', sans-serif;
+font-weight: 500;
+font-size: 1.05rem;
+line-height: 1.3;
+color: var(--azul-tinte-texto);
+background: var(--azul-tinte);
+padding: 7px 18px;
+border-radius: 18px;
+margin: 0 0 18px;
 }
 
 /* ---------- HERO ---------- */
 header.hero {
 padding: 28px 0 32px;
-}
-.eyebrow {
-font-family: 'IBM Plex Mono', monospace;
-font-size: 0.85rem;
-font-weight: 500;
-letter-spacing: 0.1em;
-text-transform: uppercase;
-color: var(--cyan);
-margin: 0 0 18px;
-display: inline-block;
 }
 h1 {
 font-family: 'Fraunces', serif;
@@ -102,10 +117,11 @@ font-size: clamp(2rem, 7vw, 2.7rem);
 line-height: 1.08;
 letter-spacing: -0.01em;
 margin: 0 0 16px;
+color: var(--titulo);
 }
 h1 em {
 font-style: normal;
-background: var(--grad);
+background: var(--grad-texto);
 -webkit-background-clip: text;
 background-clip: text;
 color: transparent;
@@ -113,7 +129,7 @@ color: transparent;
 .lede {
 font-size: 1.05rem;
 line-height: 1.55;
-color: rgba(245,244,251,0.78);
+color: var(--texto);
 max-width: 46ch;
 margin: 0 0 30px;
 }
@@ -123,7 +139,7 @@ margin: 0 0 30px;
 background: linear-gradient(180deg, #17172A 0%, #100F1F 100%);
 border-radius: 26px;
 padding: 16px 14px 20px;
-box-shadow: 0 30px 60px -20px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.05);
+box-shadow: 0 24px 48px -16px rgba(11,31,58,0.45), 0 0 0 1px rgba(11,31,58,0.06);
 position: relative;
 }
 .phone-head {
@@ -137,16 +153,16 @@ margin-bottom: 14px;
 .phone-avatar {
 width: 34px; height: 34px;
 border-radius: 50%;
-background: var(--grad);
+background: var(--grad-tel);
 display: flex; align-items: center; justify-content: center;
-color: var(--ink);
+color: #050507;
 font-family: 'Fraunces', serif;
 font-weight: 700;
 font-size: 0.95rem;
 flex-shrink: 0;
 }
-.phone-name { color: var(--paper); font-weight: 600; font-size: 0.92rem; }
-.phone-status { color: var(--cyan); font-size: 0.72rem; font-family: 'IBM Plex Mono', monospace; }
+.phone-name { color: var(--tel-papel); font-weight: 600; font-size: 0.92rem; }
+.phone-status { color: var(--tel-cian); font-size: 0.72rem; font-family: 'IBM Plex Mono', monospace; }
 
 .bubbles { display: flex; flex-direction: column; gap: 9px; min-height: 210px; }
 
@@ -163,7 +179,7 @@ animation: rise 0.45s ease forwards;
 .bubble.in {
 align-self: flex-start;
 background: #221F36;
-color: var(--paper);
+color: var(--tel-papel);
 border-bottom-left-radius: 4px;
 }
 .bubble.out {
@@ -172,7 +188,7 @@ background: var(--bubble-out);
 color: #FFFFFF;
 border-bottom-right-radius: 4px;
 }
-.bubble b { color: var(--cyan); }
+.bubble b { color: var(--tel-cian); }
 .bubble.out b { color: #D9F4FF; }
 
 .b1 { animation-delay: 0.3s; }
@@ -216,23 +232,13 @@ animation: bounce 1s infinite ease-in-out;
 section { border-top: 1px solid var(--line); }
 section.wrap { padding-top: 40px; padding-bottom: 40px; }
 
-.kicker {
-font-family: 'IBM Plex Mono', monospace;
-font-size: 0.85rem;
-font-weight: 500;
-letter-spacing: 0.1em;
-text-transform: uppercase;
-color: var(--cyan);
-margin: 0 0 20px;
-display: inline-block;
-}
 h2 {
 font-family: 'Fraunces', serif;
 font-weight: 600;
 font-size: 1.6rem;
 margin: 0 0 28px;
 letter-spacing: -0.01em;
-color: var(--paper);
+color: var(--titulo);
 }
 
 /* para quién */
@@ -243,13 +249,14 @@ gap: 10px;
 margin-bottom: 20px;
 }
 .rubro {
-background: rgba(245,244,251,0.04);
-border: 1px solid var(--line);
+background: var(--tarjeta);
+border: 1px solid var(--borde);
 border-radius: 14px;
 padding: 16px 14px;
+box-shadow: 0 1px 2px rgba(11, 31, 58, 0.04);
 }
 .rubro-emoji { font-size: 1.3rem; display: block; margin-bottom: 8px; }
-.rubro-label { font-weight: 600; font-size: 0.92rem; }
+.rubro-label { font-weight: 600; font-size: 0.92rem; color: var(--titulo); }
 
 /* cómo funciona */
 .pasos { display: flex; flex-direction: column; gap: 0; }
@@ -262,14 +269,14 @@ border-top: 1px solid var(--line);
 .paso:first-child { border-top: none; padding-top: 0; }
 .paso-num {
 font-family: 'IBM Plex Mono', monospace;
-color: var(--cyan);
+color: var(--azul);
 font-weight: 700;
 font-size: 0.85rem;
 flex-shrink: 0;
 padding-top: 2px;
 }
-.paso-title { font-weight: 600; margin: 0 0 4px; font-size: 1rem; color: var(--paper); }
-.paso-desc { color: rgba(245,244,251,0.68); font-size: 0.92rem; line-height: 1.5; margin: 0; }
+.paso-title { font-weight: 600; margin: 0 0 4px; font-size: 1rem; color: var(--titulo); }
+.paso-desc { color: var(--texto); font-size: 0.92rem; line-height: 1.5; margin: 0; }
 
 /* por qué elegir */
 .porques {
@@ -281,23 +288,24 @@ gap: 12px;
 display: flex;
 gap: 12px;
 align-items: flex-start;
-background: rgba(245,244,251,0.04);
-border: 1px solid var(--line);
+background: var(--tarjeta);
+border: 1px solid var(--borde);
 border-radius: 14px;
 padding: 14px 16px;
+box-shadow: 0 1px 2px rgba(11, 31, 58, 0.04);
 }
 .porque-check {
 flex-shrink: 0;
 width: 22px; height: 22px;
 border-radius: 50%;
-background: var(--grad);
+background: var(--azul);
 display: flex; align-items: center; justify-content: center;
-color: var(--ink);
+color: #FFFFFF;
 font-size: 0.75rem;
 font-weight: 700;
 margin-top: 1px;
 }
-.porque-text { font-size: 0.94rem; line-height: 1.45; color: var(--paper); }
+.porque-text { font-size: 0.94rem; line-height: 1.45; color: var(--titulo); }
 
 /* video */
 .video-slot {
@@ -306,7 +314,7 @@ max-width: 320px;
 margin: 0 auto;
 border-radius: 20px;
 background: linear-gradient(160deg, #17172A 0%, #0A0A14 100%);
-border: 1px solid var(--line);
+border: 1px solid var(--borde);
 display: flex;
 align-items: center;
 justify-content: center;
@@ -316,10 +324,10 @@ padding: 24px;
 .video-slot video { width: 100%; height: 100%; border-radius: 20px; object-fit: cover; display: none; }
 .video-slot.has-video .placeholder-text { display: none; }
 .video-slot.has-video video { display: block; }
-.video-slot.has-video { padding: 0; overflow: hidden; background: #0B141A; }
-.video-nota { text-align: center; font-size: 0.8rem; color: var(--muted); margin: 14px 0 0; }
-.transcripcion { max-width: 320px; margin: 14px auto 0; font-size: 0.85rem; color: rgba(245,244,251,0.7); }
-.transcripcion summary { cursor: pointer; color: var(--cyan); font-weight: 500; }
+.video-slot.has-video { padding: 0; overflow: hidden; background: #0B141A; box-shadow: 0 24px 48px -16px rgba(11,31,58,0.35); }
+.video-nota { text-align: center; font-size: 0.8rem; color: var(--suave); margin: 14px 0 0; }
+.transcripcion { max-width: 320px; margin: 14px auto 0; font-size: 0.85rem; color: var(--texto); }
+.transcripcion summary { cursor: pointer; color: var(--azul); font-weight: 500; }
 .transcripcion p { margin: 8px 0 0; line-height: 1.5; }
 .play-ring {
 width: 52px; height: 52px;
@@ -338,30 +346,31 @@ margin: 0;
 
 /* CTA */
 .cta-box {
-background: linear-gradient(145deg, var(--accent-deep) 0%, #1B1440 100%);
-border: 1px solid var(--line);
+background: linear-gradient(145deg, var(--noche) 0%, var(--noche-2) 100%);
 border-radius: 22px;
 padding: 32px 26px;
 text-align: center;
 }
-.cta-box h2 { color: var(--paper); }
-.cta-box p { color: rgba(245,244,251,0.82); font-size: 0.95rem; margin: 0 0 24px; }
+.cta-box h2 { color: #F4F8FF; }
+.cta-box p { color: #CBD5E1; font-size: 0.95rem; margin: 0 0 24px; }
 .wa-btn {
 display: inline-flex;
 align-items: center;
 gap: 10px;
-background: var(--grad);
-color: var(--ink);
+background: var(--azul);
+color: #FFFFFF;
 font-weight: 700;
 font-size: 1rem;
 text-decoration: none;
 padding: 15px 26px;
 border-radius: 100px;
-transition: transform 0.15s ease, box-shadow 0.15s ease;
-box-shadow: 0 10px 30px -8px rgba(145,52,246,0.55);
+transition: transform 0.15s ease, background 0.15s ease;
+box-shadow: 0 10px 24px -10px rgba(45, 91, 246, 0.6);
 }
-.wa-btn:hover { transform: translateY(-2px); }
+.wa-btn:hover { transform: translateY(-2px); background: var(--azul-hover); }
 .wa-btn svg { width: 20px; height: 20px; }
+.cta-box .wa-btn { background: var(--cian); color: var(--noche); box-shadow: none; }
+.cta-box .wa-btn:hover { background: #5FD3F7; }
 
 footer.wrap {
 padding-top: 36px;
@@ -372,7 +381,7 @@ text-align: center;
 }
 footer p {
 font-size: 0.92rem;
-color: var(--muted);
+color: var(--suave);
 line-height: 1.7;
 margin: 0;
 }
@@ -410,7 +419,7 @@ margin: 0;
 
 <section class="wrap">
 <p class="kicker">¿Es para tu negocio?</p>
-<h2>Si tu negocio depende de WhatsApp para atender, agendar o vender, Flunova es para ti.</h2>
+<h2>Si tu negocio depende de WhatsApp para atender o vender, Flunova es para ti.</h2>
 <div class="rubros">
 <div class="rubro"><span class="rubro-emoji">🦷</span><span class="rubro-label">Clínicas dentales</span></div>
 <div class="rubro"><span class="rubro-emoji">🐶</span><span class="rubro-label">Veterinarias</span></div>
